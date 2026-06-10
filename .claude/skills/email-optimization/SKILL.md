@@ -16,7 +16,7 @@ responses, scores the variation, and tweaks the content toward the highest
 inspected and resumed.
 
 **Always load the `kalygo-api` skill alongside this one** — it has the endpoint
-details and auth patterns. Use the helpers in `loop_helpers.py` for every API call
+details and auth patterns. Use the helpers in `ar_helpers.py` for every API call
 and the scoring math; do not re-implement them.
 
 ---
@@ -40,7 +40,7 @@ state file.
 - **One folder for content: `iter_payloads/`.** Save each variant as
   `iter_payloads/iter{N}.json`. Never create parallel folders (`specs/`, `drafts/`,
   `variants/`, `notes/`) and never write `iterN_v2.json` — overwrite on retry.
-- **Reuse `loop_helpers.py`.** Don't author new helper scripts at the root. A rare
+- **Reuse `ar_helpers.py`.** Don't author new helper scripts at the root. A rare
   one-off goes under `.loop_scratch/` (gitignored), never the project root.
 - **No stray reports** (`summary.md`, `report.json`, …). The run's output is the
   `@@ITER` stdout lines + the end-of-run report in chat; the durable record is
@@ -217,7 +217,7 @@ participation_rate = num_ratings / send_count
 balanced_score     = avg_rating × √(participation_rate)
 ```
 
-(Use `balanced_score(avg_rating, num_ratings, send_count)` from `loop_helpers.py`.)
+(Use `balanced_score(avg_rating, num_ratings, send_count)` from `ar_helpers.py`.)
 
 ### Step 6 — Record
 

@@ -5,7 +5,7 @@
 #
 # A run leaves two artifacts: progress.tsv and iter_payloads/ (plus loop.log if you
 # logged to one). loop_prompt.txt is COPIED — the archive records the config that
-# produced the run, and you keep the file to edit for next time. loop_helpers.py is
+# produced the run, and you keep the file to edit for next time. ar_helpers.py is
 # shared code and is left untouched.
 #
 # Usage:

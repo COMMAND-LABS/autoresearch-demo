@@ -15,7 +15,7 @@ Endpoint reference for the Kalygo FastAPI backend, scoped to the email-optimizat
 pipeline. For anything outside that scope, read the complete spec at
 `references/openapi.json` (exact schemas, enums, full parameter lists).
 
-The Python helpers in the project's `loop_helpers.py` already wrap the calls below —
+The Python helpers in the project's `ar_helpers.py` already wrap the calls below —
 prefer them over hand-rolling requests.
 
 ## Authentication
@@ -49,13 +49,13 @@ but are not used by the loop.)
 
 ## Email Campaigns
 
-| Method | Path                                              | Purpose                                              |
-| ------ | ------------------------------------------------- | ---------------------------------------------------- |
-| POST   | `/api/email-campaigns/`                           | Create a campaign (grouping tag; content NOT stored) |
-| GET    | `/api/email-campaigns/{id}`                       | Get a campaign                                       |
-| GET    | `/api/email-campaigns/{id}/unsent`                | Contacts not yet sent for this campaign (resume)     |
-| GET    | `/api/email-campaigns/{id}/ratings/summary`       | **Aggregate ratings** for the campaign               |
-| GET    | `/api/email-campaigns/{id}/ratings`               | Individual rating rows (`?limit=`, `?min_rating=` …) |
+| Method | Path                                        | Purpose                                              |
+| ------ | ------------------------------------------- | ---------------------------------------------------- |
+| POST   | `/api/email-campaigns/`                     | Create a campaign (grouping tag; content NOT stored) |
+| GET    | `/api/email-campaigns/{id}`                 | Get a campaign                                       |
+| GET    | `/api/email-campaigns/{id}/unsent`          | Contacts not yet sent for this campaign (resume)     |
+| GET    | `/api/email-campaigns/{id}/ratings/summary` | **Aggregate ratings** for the campaign               |
+| GET    | `/api/email-campaigns/{id}/ratings`         | Individual rating rows (`?limit=`, `?min_rating=` …) |
 
 The campaign is purely a **grouping/correlation tag**; `email_template_id` and
 `contact_list_id` are optional and no content is stored on it — content rides in per
@@ -95,10 +95,10 @@ template) exists for back-compat; prefer the primitive above.
 
 Recipients rate by clicking a star link, which hits the tracker:
 
-| Method | Path                          | Purpose                               |
-| ------ | ----------------------------- | ------------------------------------- |
-| GET    | `/t/o/{tracking_id}`          | Track open (returns 1×1 GIF)          |
-| GET    | `/t/r/{tracking_id}/{rating}` | Track star rating click (rating 1–5)  |
+| Method | Path                          | Purpose                              |
+| ------ | ----------------------------- | ------------------------------------ |
+| GET    | `/t/o/{tracking_id}`          | Track open (returns 1×1 GIF)         |
+| GET    | `/t/r/{tracking_id}/{rating}` | Track star rating click (rating 1–5) |
 
 Those clicks are recorded as **ratings** keyed to the `(campaign, contact)` via
 `tracking_id`. **Read them back from the campaign ratings endpoints, not from
@@ -120,12 +120,12 @@ Use `total_ratings` as `num_ratings` and `average_rating` as `avg_rating`.
 
 ## Contacts & Contact Lists
 
-| Method | Path                                    | Purpose                          |
-| ------ | --------------------------------------- | -------------------------------- |
-| GET    | `/api/contact-lists/`                   | List contact lists               |
-| GET    | `/api/contact-lists/{list_id}`          | Get a list with its members      |
-| POST   | `/api/contact-lists/{list_id}/members/` | Add a contact (also `/bulk`)     |
-| GET    | `/api/contacts/`                        | List contacts (`?search=`)       |
+| Method | Path                                    | Purpose                      |
+| ------ | --------------------------------------- | ---------------------------- |
+| GET    | `/api/contact-lists/`                   | List contact lists           |
+| GET    | `/api/contact-lists/{list_id}`          | Get a list with its members  |
+| POST   | `/api/contact-lists/{list_id}/members/` | Add a contact (also `/bulk`) |
+| GET    | `/api/contacts/`                        | List contacts (`?search=`)   |
 
 ## Credentials
 

@@ -14,7 +14,6 @@ import subprocess
 API_KEY = os.environ["KALYGO_API_KEY"]
 BASE = os.environ["KALYGO_API_BASE_URL"]
 
-
 def _curl(method, path, body=None):
     cmd = [
         "curl", "-sS", "-X", method,

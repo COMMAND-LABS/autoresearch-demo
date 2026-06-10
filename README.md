@@ -5,7 +5,7 @@ Herein lies an autoresearch implementation for optimizing email content based on
 ## How to kick off the autoresearch loop
 
 ```sh
-claude --dangerously-skip-permissions -p "$(cat loop_prompt.txt)" \
+claude --dangerously-skip-permissions -p "$(cat ar_prompt.txt)" \
   --output-format stream-json --verbose \
   | jq -r --unbuffered '
     if .type=="assistant" then
