@@ -1,5 +1,5 @@
 ---
-name: email-optimization-loop
+name: email-optimization
 description: >
   Iterative email campaign optimization skill. Use this skill whenever the user wants to
   A/B test or optimize email campaigns, experiment with email subject lines or content,
@@ -8,7 +8,7 @@ description: >
   combination with the kalygo-api skill — always load both when this skill is active.
 ---
 
-# Email Optimization Loop Skill
+# Email Optimization Skill
 
 Orchestrates an iterative loop that sends an email campaign, waits for star-rating
 responses, scores the variation, and tweaks the content toward the highest
@@ -26,10 +26,10 @@ and the scoring math; do not re-implement them.
 This implementation is deliberately small. **Keep it that way.** A run writes
 exactly **two** things — don't invent files or folders.
 
-| Path                         | What                                              |
-| ---------------------------- | ------------------------------------------------- |
+| Path                         | What                                               |
+| ---------------------------- | -------------------------------------------------- |
 | `progress.tsv`               | One row per iteration — the scoreboard (see below) |
-| `iter_payloads/iter{N}.json` | The exact content sent in iteration N             |
+| `iter_payloads/iter{N}.json` | The exact content sent in iteration N              |
 
 That's the whole persistence model. Everything else (best score, best content,
 plateau count) is **derived** from these two on the fly — there is no separate
@@ -98,18 +98,18 @@ Columns (in order, tab-separated, **no tabs or newlines inside any field**):
 iteration  experiment  campaign_id  balanced_score  avg_rating  num_ratings  send_count  participation_rate  status  what_changed
 ```
 
-| Column               | Type   | Notes                                                       |
-| -------------------- | ------ | ----------------------------------------------------------- |
-| `iteration`          | int    | 1-indexed                                                   |
-| `experiment`         | string | The run label                                               |
-| `campaign_id`        | int    | Kalygo campaign created for this iteration                  |
-| `balanced_score`     | float  | `avg_rating × √(participation_rate)`. `0.0` on crash.       |
-| `avg_rating`         | float  | Mean rating this iteration. `0.0` on crash.                 |
-| `num_ratings`        | int    | Ratings received. `0` on crash.                             |
-| `send_count`         | int    | `summary["sent"]` from `execute_campaign`. `0` on crash.    |
-| `participation_rate` | float  | `num_ratings / send_count`, 3 dp. `0.0` on crash.           |
-| `status`             | string | `keep`, `discard`, or `crash` (semantics below)             |
-| `what_changed`       | string | Short prose describing the variant + why                    |
+| Column               | Type   | Notes                                                    |
+| -------------------- | ------ | -------------------------------------------------------- |
+| `iteration`          | int    | 1-indexed                                                |
+| `experiment`         | string | The run label                                            |
+| `campaign_id`        | int    | Kalygo campaign created for this iteration               |
+| `balanced_score`     | float  | `avg_rating × √(participation_rate)`. `0.0` on crash.    |
+| `avg_rating`         | float  | Mean rating this iteration. `0.0` on crash.              |
+| `num_ratings`        | int    | Ratings received. `0` on crash.                          |
+| `send_count`         | int    | `summary["sent"]` from `execute_campaign`. `0` on crash. |
+| `participation_rate` | float  | `num_ratings / send_count`, 3 dp. `0.0` on crash.        |
+| `status`             | string | `keep`, `discard`, or `crash` (semantics below)          |
+| `what_changed`       | string | Short prose describing the variant + why                 |
 
 `status` semantics:
 
@@ -168,8 +168,13 @@ and resolved server-side per recipient.
 including at minimum the `variables` you'll send plus `iter` and `what_changed`:
 
 ```json
-{ "iter": 4, "what_changed": "added {{first_name}} to subject",
-  "SUBJECT": "...", "TITLE": "...", "MAIN_CONTENT": "..." }
+{
+  "iter": 4,
+  "what_changed": "added {{first_name}} to subject",
+  "SUBJECT": "...",
+  "TITLE": "...",
+  "MAIN_CONTENT": "..."
+}
 ```
 
 ### Step 2 — Create the campaign (grouping tag)
