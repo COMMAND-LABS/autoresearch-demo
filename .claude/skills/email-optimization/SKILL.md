@@ -272,16 +272,6 @@ surface it.
 
 ---
 
-## Autonomous Mode
-
-By default the loop pauses for confirmation between iterations. If the user asks for an
-autonomous run ("just keep going", "don't ask"), drop the check-ins and run to
-convergence / max iterations / repeated crashes, then write the final report. Watch for
-**recipient fatigue** — at most one iteration per `wait_minutes` window to the same list;
-real humans are receiving these.
-
----
-
 ## Reporting
 
 After each iteration, EMIT a 3-line status block to stdout via an actual shell/echo
