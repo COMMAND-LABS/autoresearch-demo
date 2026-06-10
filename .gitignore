@@ -1,0 +1,7 @@
+__pycache__/
+
+.env
+archive
+.loop_scratch
+.loop_state.json
+iter_payloads

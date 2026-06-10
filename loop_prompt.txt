@@ -1,0 +1,82 @@
+# TASK
+
+Run an autoresearch loop in order to optimize a fun haiku as delivered to an online audience via email.
+
+The metric to optimize is the "balanced_score"...
+
+participation_rate = num_ratings / send_count
+balanced_score = avg_rating × √(participation_rate)
+
+## AUTORESEARCH PARAMETERS
+
+experiment_name: ar-exp-6_9_26__2_18pm
+contact_list_id: 3
+email_template_id: 6
+credential_id: 30
+wait_minutes_for_feedback: 1
+max_iterations: 10
+convergence_threshold: 0.05
+patience: 3
+target_score: 4.7
+what_to_vary: SUBJECT, TITLE, MAIN_CONTENT
+
+## ADDITIONAL REQUIREMENTS
+
+- Run fully autonomously.
+- Do not call AskUserQuestion or pause for confirmation — choose sensible defaults and proceed through all iterations on your own.
+- Only stop early if something is genuinely broken (e.g. the API is unreachable or sends fail)
+- Ensure the MAIN_CONTENT is beautifully formatted for email
+- Each experiment should start from scratch and not be influenced by past experiments
+- Keep the project tree clean. Save each iteration's content as `iter_payloads/iter{N}.json` and write nothing else outside the blessed artifacts (`progress.tsv`, `iter_payloads/`, `.loop_state.json`, `loop.log`). Do NOT create extra folders (e.g. `specs/`, `drafts/`) or new helper scripts at the root — reuse `loop_helpers.py`; put any throwaway scratch under `.loop_scratch/`.
+
+## PROGRESS REPORTING
+
+At the END of every iteration, EMIT a status block to stdout by
+running an actual shell/echo command (do NOT merely narrate it in your reply — it
+must be printed by a tool call so it shows up in the streamed tool output). Print
+EXACTLY three lines, each line beginning with the literal marker `@@ITER`:
+  @@ITER [iter N/MAX] varied: <what changed vs. the current best, and why>
+  @@ITER sent <s>/<t> · waited <w>m · ratings <r> · avg <a>
+  @@ITER score <x> vs best <y> -> <new-best|keep|discard|converged|patience> (<reason>)
+This is IN ADDITION to the one structured row you append to progress.tsv (don't drop
+that). The `@@ITER` marker is what the console filter greps for, so include it
+verbatim at the start of each of the three lines.
+
+## PREVIEW OF CONFIG OF ASSOCIATED EMAIL TEMPLATE
+
+{
+  "account_id": 1,
+  "name": "RATE_YOUR_EXPERIENCE",
+  "slug": "rate-your-experience",
+  "description": "Rate your experience email with interactive star rating",
+  "subject_template": "{{ SUBJECT }}",
+  "variables": [
+    {
+      "name": "SUBJECT",
+      "label": "Email subject",
+      "default": "",
+      "required": true
+    },
+    {
+      "name": "TITLE",
+      "label": "Headline text",
+      "default": "",
+      "required": true
+    },
+    {
+      "name": "MAIN_CONTENT",
+      "label": "Main body copy",
+      "default": "",
+      "required": true
+    },
+    {
+      "name": "RATING_BASE_URL",
+      "label": "Base URL for star rating links (e.g. https://api.example.com/t/r/<tracking_id>)",
+      "default": "https://api.kalygo.io/t/r/",
+      "required": true
+    }
+  ],
+  "id": 6,
+  "created_at": "2026-04-29T03:33:11.175110+00:00",
+  "updated_at": "2026-04-29T03:33:11.175110+00:00"
+}
