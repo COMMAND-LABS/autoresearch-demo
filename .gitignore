@@ -1,7 +1,16 @@
 __pycache__/
 
+# secrets
 .env
-archive
-.loop_scratch
-.loop_state.json
+
+# run artifacts (one experiment's output; archived by archive_and_reset.sh)
+progress.tsv
+loop.log
 iter_payloads
+archive
+
+# throwaway scratch (the only place ad-hoc scripts may live)
+.loop_scratch
+
+# macOS
+.DS_Store

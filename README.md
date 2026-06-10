@@ -48,7 +48,7 @@ claude --dangerously-skip-permissions -p "$(cat loop_prompt.txt)" \
 
 `credential_id`: 30 — the stored AWS SES credential used to actually deliver the mail. Why? it's the sending identity/auth; without it nothing leaves the building.
 
-`branch`: ar-exp-6_9_26\_\_1_20pm — a label for the current autoresearch experiment. Why? it groups one experiment's artifacts so runs can be told apart, resumed, and archived.
+`experiment`: e.g. ar-exp-6_9_26\_\_1_20pm — a label for the current autoresearch run. Why? it groups one run's artifacts (the `experiment` column in `progress.tsv`, the `archive/<experiment>/` folder) so runs can be told apart, resumed, and archived.
 
 `wait_minutes`: how long to wait for feedback after running the system Why? recipients need time to open and tap a star; measure too early and you record zeros. At 1 minute, humans can't respond in time — bump to 5–10+ for real signal (1 is fine only to test the pipeline).
 

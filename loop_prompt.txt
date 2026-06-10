@@ -9,14 +9,14 @@ balanced_score = avg_rating × √(participation_rate)
 
 ## AUTORESEARCH PARAMETERS
 
-experiment_name: ar-exp-6_9_26__2_18pm
+experiment_name: ar-exp-6_10_26__1_36pm
 contact_list_id: 3
 email_template_id: 6
 credential_id: 30
 wait_minutes_for_feedback: 1
-max_iterations: 10
+max_iterations: 7
 convergence_threshold: 0.05
-patience: 3
+patience: 2
 target_score: 4.7
 what_to_vary: SUBJECT, TITLE, MAIN_CONTENT
 
@@ -25,9 +25,10 @@ what_to_vary: SUBJECT, TITLE, MAIN_CONTENT
 - Run fully autonomously.
 - Do not call AskUserQuestion or pause for confirmation — choose sensible defaults and proceed through all iterations on your own.
 - Only stop early if something is genuinely broken (e.g. the API is unreachable or sends fail)
-- Ensure the MAIN_CONTENT is beautifully formatted for email
+- Ensure the MAIN_CONTENT is beautifully formatted for email inbox rendering
+- Keep the styling of the MAIN_CONTENT straightforward so it renders as intended according to html email best practices
 - Each experiment should start from scratch and not be influenced by past experiments
-- Keep the project tree clean. Save each iteration's content as `iter_payloads/iter{N}.json` and write nothing else outside the blessed artifacts (`progress.tsv`, `iter_payloads/`, `.loop_state.json`, `loop.log`). Do NOT create extra folders (e.g. `specs/`, `drafts/`) or new helper scripts at the root — reuse `loop_helpers.py`; put any throwaway scratch under `.loop_scratch/`.
+- Keep the project tree clean. A run writes only two things: `progress.tsv` (one row per iteration) and `iter_payloads/iter{N}.json` (the content sent). There is no separate state file — best score and best content are derived from those two. Do NOT create extra folders (e.g. `specs/`, `drafts/`) or new helper scripts at the root — reuse `loop_helpers.py`; put any rare throwaway scratch under `.loop_scratch/`.
 
 ## PROGRESS REPORTING
 
