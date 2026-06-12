@@ -1,6 +1,6 @@
 # TASK
 
-Run an autoresearch loop in order to optimize a fun haiku as delivered to an online audience via email.
+Run an autoresearch loop in order to optimize a fun haiku delivered to an online audience via email.
 
 The metric to optimize is the "balanced_score"...
 
