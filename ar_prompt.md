@@ -9,15 +9,15 @@ balanced_score = avg_rating × √(participation_rate)
 
 ## AUTORESEARCH PARAMETERS
 
-experiment_name: ar-exp-6_10_26__1_36pm
+experiment_name: ar-exp-6_10_26\_\_1_36pm
 contact_list_id: 3
 email_template_id: 6
 credential_id: 30
 wait_minutes_for_feedback: 1
 max_iterations: 7
 convergence_threshold: 0.05
-patience: 2
-target_score: 4.7
+patience: 3
+target_score: 4.5
 what_to_vary: SUBJECT, TITLE, MAIN_CONTENT
 
 ## ADDITIONAL REQUIREMENTS
@@ -36,9 +36,9 @@ At the END of every iteration, EMIT a status block to stdout by
 running an actual shell/echo command (do NOT merely narrate it in your reply — it
 must be printed by a tool call so it shows up in the streamed tool output). Print
 EXACTLY three lines, each line beginning with the literal marker `@@ITER`:
-  @@ITER [iter N/MAX] varied: <what changed vs. the current best, and why>
-  @@ITER sent <s>/<t> · waited <w>m · ratings <r> · avg <a>
-  @@ITER score <x> vs best <y> -> <new-best|keep|discard|converged|patience> (<reason>)
+@@ITER [iter N/MAX] varied: <what changed vs. the current best, and why>
+@@ITER sent <s>/<t> · waited <w>m · ratings <r> · avg <a>
+@@ITER score <x> vs best <y> -> <new-best|keep|discard|converged|patience> (<reason>)
 This is IN ADDITION to the one structured row you append to progress.tsv (don't drop
 that). The `@@ITER` marker is what the console filter greps for, so include it
 verbatim at the start of each of the three lines.
@@ -46,38 +46,38 @@ verbatim at the start of each of the three lines.
 ## PREVIEW OF CONFIG OF ASSOCIATED EMAIL TEMPLATE
 
 {
-  "account_id": 1,
-  "name": "RATE_YOUR_EXPERIENCE",
-  "slug": "rate-your-experience",
-  "description": "Rate your experience email with interactive star rating",
-  "subject_template": "{{ SUBJECT }}",
-  "variables": [
-    {
-      "name": "SUBJECT",
-      "label": "Email subject",
-      "default": "",
-      "required": true
-    },
-    {
-      "name": "TITLE",
-      "label": "Headline text",
-      "default": "",
-      "required": true
-    },
-    {
-      "name": "MAIN_CONTENT",
-      "label": "Main body copy",
-      "default": "",
-      "required": true
-    },
-    {
-      "name": "RATING_BASE_URL",
-      "label": "Base URL for star rating links (e.g. https://api.example.com/t/r/<tracking_id>)",
-      "default": "https://api.kalygo.io/t/r/",
-      "required": true
-    }
-  ],
-  "id": 6,
-  "created_at": "2026-04-29T03:33:11.175110+00:00",
-  "updated_at": "2026-04-29T03:33:11.175110+00:00"
+"account_id": 1,
+"name": "RATE_YOUR_EXPERIENCE",
+"slug": "rate-your-experience",
+"description": "Rate your experience email with interactive star rating",
+"subject_template": "{{ SUBJECT }}",
+"variables": [
+{
+"name": "SUBJECT",
+"label": "Email subject",
+"default": "",
+"required": true
+},
+{
+"name": "TITLE",
+"label": "Headline text",
+"default": "",
+"required": true
+},
+{
+"name": "MAIN_CONTENT",
+"label": "Main body copy",
+"default": "",
+"required": true
+},
+{
+"name": "RATING_BASE_URL",
+"label": "Base URL for star rating links (e.g. https://api.example.com/t/r/<tracking_id>)",
+"default": "https://api.kalygo.io/t/r/",
+"required": true
+}
+],
+"id": 6,
+"created_at": "2026-04-29T03:33:11.175110+00:00",
+"updated_at": "2026-04-29T03:33:11.175110+00:00"
 }
